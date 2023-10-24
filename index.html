@@ -6,7 +6,9 @@
         .wrapper {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 5vh repeat(3, 1fr);
             justify-items: center;
+            align-items: center;
             grid-gap: 5%;
         }
 
@@ -16,7 +18,8 @@
 
         .container {
             padding: 0 20px;
-            max-width: 600px;
+            /*max-width: 600px;*/
+            height: 100vh;
             margin: auto;
         }
         .card{
@@ -26,6 +29,17 @@
             border-radius: 512px;
             width:100%;
             height: 100%;
+        }
+        .image:before{
+            content: "";
+            display: inline-block;
+            width: 1px;
+            height: 0;
+            padding-bottom: 100%;
+            /*width: 100%;*/
+        }
+        .head {
+            grid-column: 1 / span 2;
         }
 
         .card img {
@@ -40,8 +54,19 @@
             opacity: 1;
             /*transition: opacity 0.1s cubic-bezier(0, 0.57, 0.58, 1);*/
         }
+
+        :root{
+            --card1: "url('back.png')";
+            --card2: "url('back.png')";
+            --card3: "url('back.png')";
+            --card4: "url('back.png')";
+            --card5: "url('back.png')";
+            --card6: "url('back.png')";
+        }
+
         .image{
-            background: url("10.jpg") no-repeat;
+            background-image: url("back.png");
+            background-repeat: no-repeat;
             background-size: cover;
             border-radius: 512px;
             opacity:0;
@@ -49,41 +74,62 @@
             height: 100%;
         }
 
+        .card1{
+            background-image: var(--card1);
+        }
+        .card2{
+            background-image: var(--card2);
+        }
+        .card3{
+            background-image: var(--card3);
+        }
+        .card4{
+            background-image: var(--card4);
+        }
+        .card5{
+            background-image: var(--card5);
+        }
+        .card6{
+            background-image: var(--card6);
+        }
+
     </style>
 </head>
 <body>
-
-<button>click me</button>
 <div class=container>
     <div class=wrapper>
+        <div class="head">head</div>
         <div class="card">
-                <div class="image"></div>
+                <div class="card1 image"></div>
         </div>
         <div class="card">
-            <img src="10.jpg" alt="pic">
+            <div class="card2 image"></div>
         </div>
         <div class="card">
-            <img src="10.jpg" alt="pic">
+            <div class="card3 image"></div>
         </div>
         <div class="card">
-            <img src="1.jpg" alt="pic">
+            <div class="card4 image"></div>
         </div>
         <div class="card">
-            <img src="1.jpg" alt="pic">
+            <div class="card5 image"></div>
         </div>
         <div class="card">
-            <img src="10.jpg" alt="pic">
+            <div class="card6 image"></div>
         </div>
     </div>
 </div>
 <script>
 
+    let r = document.querySelector(':root');
+    document.querySelectorAll('.image').forEach((el,index) =>{
+        r.style.setProperty(`--card${index+1}`,"url('1.jpg')")
+    })
+
     document.querySelectorAll('div.card').forEach(el => {
-        console.log(el)
         el.addEventListener('click', function() {
             if (this.classList.contains('open')) this.classList.remove('open')
             else this.classList.add('open')
-            console.log('click')
         })
     })
 
