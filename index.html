@@ -3,13 +3,13 @@
 <head>
     <title>Test</title>
     <style>
-        .wrapper {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: 5vh repeat(3, 1fr);
-            justify-items: center;
-            align-items: center;
-            grid-gap: 5%;
+        :root {
+            --card1: "url('back.png')";
+            --card2: "url('back.png')";
+            --card3: "url('back.png')";
+            --card4: "url('back.png')";
+            --card5: "url('back.png')";
+            --card6: "url('back.png')";
         }
 
         * {
@@ -21,27 +21,39 @@
             height: 100vh;
             margin: auto;
         }
+
         @media only screen and (min-device-width: 480px) {
             .container {
                 max-width: 400px;
             }
         }
-        .card{
-            line-height:0;
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 5vh repeat(3, 1fr);
+            justify-items: center;
+            align-items: center;
+            grid-gap: 5%;
+        }
+
+        .card {
+            line-height: 0;
             background: url("back.png") no-repeat;
-            background-size:cover;
+            background-size: cover;
             border-radius: 512px;
-            width:100%;
+            width: 100%;
             height: 100%;
         }
-        .image:before{
+
+        .image:before {
             content: "";
             display: inline-block;
             width: 1px;
             height: 0;
             padding-bottom: 100%;
-            /*width: 100%;*/
         }
+
         .head {
             grid-column: 1 / span 2;
         }
@@ -54,27 +66,20 @@
             opacity: 0;
             /*transition: opacity 0.1s cubic-bezier(0, 0.57, 0.58, 1);*/
         }
-        .open img, .open .image{
+
+        .open img, .open .image {
             opacity: 1;
             /*transition: opacity 0.1s cubic-bezier(0, 0.57, 0.58, 1);*/
         }
 
-        :root{
-            --card1: "url('back.png')";
-            --card2: "url('back.png')";
-            --card3: "url('back.png')";
-            --card4: "url('back.png')";
-            --card5: "url('back.png')";
-            --card6: "url('back.png')";
-        }
 
-        .image{
+        .image {
             background-image: url("back.png");
             background-repeat: no-repeat;
             background-size: cover;
             border-radius: 512px;
-            opacity:0;
-            width:100%;
+            opacity: 0;
+            width: 100%;
             height: 100%;
         }
 
@@ -97,14 +102,26 @@
             background-image: var(--card6);
         }
 
+
+
+
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTDJD9RZ48"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-XTDJD9RZ48');
+    </script>
 </head>
 <body>
 <div class=container>
     <div class=wrapper>
         <div class="head">head</div>
         <div class="card">
-                <div class="card1 image"></div>
+            <div class="card1 image"></div>
         </div>
         <div class="card">
             <div class="card2 image"></div>
@@ -125,13 +142,15 @@
 </div>
 <script>
 
+
+
     let r = document.querySelector(':root');
-    document.querySelectorAll('.image').forEach((el,index) =>{
-        r.style.setProperty(`--card${index+1}`,"url('1.jpg')")
+    document.querySelectorAll('.image').forEach((el, index) => {
+        r.style.setProperty(`--card${index + 1}`, "url('1.jpg')")
     })
 
     document.querySelectorAll('div.card').forEach(el => {
-        el.addEventListener('click', function() {
+        el.addEventListener('click', function () {
             if (this.classList.contains('open')) this.classList.remove('open')
             else this.classList.add('open')
         })
