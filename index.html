@@ -29,11 +29,7 @@
             margin: auto;
         }
 
-        @media only screen and (min-device-width: 480px) {
-            .container {
-                max-width: 400px;
-            }
-        }
+
 
         .wrapper {
             display: grid;
@@ -102,13 +98,13 @@
 
         @keyframes jump {
             from {
-                bottom: 0px;
+                bottom: 0;
             }
             50% {
                 bottom: 5px;
             }
             to {
-                bottom: 0px;
+                bottom: 0;
             }
         }
 
@@ -179,6 +175,7 @@
             background: url(textures/setting.png) no-repeat top left;
             padding: 2px 8px;
             margin-right: 30px;
+            background-size: cover;
         }
         .restart-button {
             border: none;
@@ -186,6 +183,7 @@
             height: 64px;
             background: url(textures/restart.png) no-repeat top left;
             padding: 2px 8px;
+            background-size: cover;
         }
         .btn-clicked {
             -webkit-animation: btn-rotate 500ms forwards linear;
@@ -263,6 +261,16 @@
 
         .show {
             display: block;
+        }
+
+        @media only screen and (min-device-width: 480px) {
+            .container {
+                max-width: 400px;
+            }
+            .settings-button, .restart-button {
+                width:32px;
+                height: 32px;
+            }
         }
 
 
