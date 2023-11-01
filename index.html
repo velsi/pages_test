@@ -2,14 +2,21 @@
 <html lang="ru">
 <head>
     <title>Test</title>
+    <meta charset="UTF-8">
     <style>
         :root {
-            --card1: "url('back.png')";
-            --card2: "url('back.png')";
-            --card3: "url('back.png')";
-            --card4: "url('back.png')";
-            --card5: "url('back.png')";
-            --card6: "url('back.png')";
+            --card1: "url('textures/back.png')";
+            --card2: "url('textures/back.png')";
+            --card3: "url('textures/back.png')";
+            --card4: "url('textures/back.png')";
+            --card5: "url('textures/back.png')";
+            --card6: "url('textures/back.png')";
+            --card7: "url('textures/back.png')";
+            --card8: "url('textures/back.png')";
+            --card9: "url('textures/back.png')";
+            --card10: "url('textures/back.png')";
+            --card11: "url('textures/back.png')";
+            --card12: "url('textures/back.png')";
         }
 
         * {
@@ -30,8 +37,8 @@
 
         .wrapper {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: 5vh repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 5vh repeat(4, 1fr);
             justify-items: center;
             align-items: center;
             grid-gap: 5%;
@@ -39,11 +46,15 @@
 
         .card {
             line-height: 0;
-            background: url("back.png") no-repeat;
+            background: url("textures/back.png") no-repeat;
             background-size: cover;
             border-radius: 512px;
+            border-color: #9b9da4;
+            border-style: solid;
+            border-width: 1px;
             width: 100%;
             height: 100%;
+            position: relative;
         }
 
         .image:before {
@@ -55,7 +66,19 @@
         }
 
         .head {
-            grid-column: 1 / span 2;
+            grid-column: 1 / span 3;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: self-start;
+            align-items: center;
+            grid-gap: 5%;
+            justify-content: space-between;
+            align-content: center;
+            width: 100%;
+        }
+        .head-buttons {
+            justify-self:flex-end;
+            margin-top: 10px;
         }
 
         .card img {
@@ -64,17 +87,34 @@
             width: 100%;
             max-height: 100%;
             opacity: 0;
-            /*transition: opacity 0.1s cubic-bezier(0, 0.57, 0.58, 1);*/
+            /*transition: opacity 0.500ms cubic-bezier(0, 0.57, 0.58, 1);*/
         }
 
-        .open img, .open .image {
-            opacity: 1;
-            /*transition: opacity 0.1s cubic-bezier(0, 0.57, 0.58, 1);*/
+        .open img, .open .image, .guessed {
+            opacity: 1 !important;
+            /*transition: opacity 0.500ms cubic-bezier(0, 0.57, 0.58, 1);*/
+        }
+
+        .card:has(.guessed), .card:has(.start) {
+            animation-duration: 700ms;
+            animation-name: jump;
+        }
+
+        @keyframes jump {
+            from {
+                bottom: 0px;
+            }
+            50% {
+                bottom: 5px;
+            }
+            to {
+                bottom: 0px;
+            }
         }
 
 
         .image {
-            background-image: url("back.png");
+            background-image: url("textures/back.png");
             background-repeat: no-repeat;
             background-size: cover;
             border-radius: 512px;
@@ -83,26 +123,147 @@
             height: 100%;
         }
 
-        .card1{
+        .card1 {
             background-image: var(--card1);
         }
-        .card2{
+
+        .card2 {
             background-image: var(--card2);
         }
-        .card3{
+
+        .card3 {
             background-image: var(--card3);
         }
-        .card4{
+
+        .card4 {
             background-image: var(--card4);
         }
-        .card5{
+
+        .card5 {
             background-image: var(--card5);
         }
-        .card6{
+
+        .card6 {
             background-image: var(--card6);
         }
 
+        .card7 {
+            background-image: var(--card7);
+        }
 
+        .card8 {
+            background-image: var(--card8);
+        }
+
+        .card9 {
+            background-image: var(--card9);
+        }
+
+        .card10 {
+            background-image: var(--card10);
+        }
+
+        .card11 {
+            background-image: var(--card11);
+        }
+
+        .card12 {
+            background-image: var(--card12);
+        }
+
+
+        .settings-button {
+            border: none;
+            width:64px;
+            height: 64px;
+            background: url(textures/setting.png) no-repeat top left;
+            padding: 2px 8px;
+            margin-right: 30px;
+        }
+        .restart-button {
+            border: none;
+            width:64px;
+            height: 64px;
+            background: url(textures/restart.png) no-repeat top left;
+            padding: 2px 8px;
+        }
+        .restart-button:focus, .restart-button:active, .settings-button:focus, .settings-button:active {
+            -webkit-animation: btn-rotate 500ms forwards linear;
+            -moz-animation: btn-rotate 500ms forwards linear;
+            -ms-animation: btn-rotate 500ms forwards linear;
+            -o-animation: btn-rotate 500ms forwards linear;
+            animation: btn-rotate 500ms forwards linear;
+        }
+
+        @-webkit-keyframes btn-color {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform:rotate(360deg);
+            }
+        }
+        @-moz-keyframes btn-color
+        {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform:rotate(360deg);
+            }
+        }@-ms-keyframes btn-color {
+             100% {
+                 -webkit-transform: rotate(360deg);
+                 transform:rotate(360deg);
+             }
+         }
+        @-o-keyframes btn-color {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform:rotate(360deg);
+            }
+        }
+        @keyframes btn-rotate {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform:rotate(360deg);
+            }
+        }
+
+        .counter{
+            font-size: 2rem;
+        }
+
+        .overlay{
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:100vw;
+            height:100vh;
+            display:none;
+            background-color: #9b9da4;
+            opacity: 0.9;
+        }
+        .settings{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 30px 30px;
+            justify-items: center;
+            grid-gap: 2vh;
+        }
+        .overlay-wrapper{
+            position: relative;
+            margin: 0 auto;
+            top: 25%;
+            width: 80%;
+        }
+        .class-btn {
+            width:100%;
+            font-size: 2rem;
+            border-radius: 10px;
+            min-width:80px;
+            min-height:75px;
+        }
+
+        .show {
+            display: block;
+        }
 
 
     </style>
@@ -117,44 +278,264 @@
     </script>
 </head>
 <body>
+<div>
+
+
+</div>
 <div class=container>
-    <div class=wrapper>
-        <div class="head">head</div>
-        <div class="card">
-            <div class="card1 image"></div>
+    <div class="wrapper">
+        <div class="head">
+            <div class="counter">Тыки: <strong id="count">0</strong></div>
+            <div class="head-buttons">
+                <button id="settings" class="settings-button"> </button>
+                <button id="restart" class="restart-button"> </button>
+            </div>
         </div>
         <div class="card">
-            <div class="card2 image"></div>
+            <div class="card1 image" id="card1"></div>
         </div>
         <div class="card">
-            <div class="card3 image"></div>
+            <div class="card2 image" id="card2"></div>
         </div>
         <div class="card">
-            <div class="card4 image"></div>
+            <div class="card3 image" id="card3"></div>
         </div>
         <div class="card">
-            <div class="card5 image"></div>
+            <div class="card4 image" id="card4"></div>
         </div>
         <div class="card">
-            <div class="card6 image"></div>
+            <div class="card5 image" id="card5"></div>
+        </div>
+        <div class="card">
+            <div class="card6 image" id="card6"></div>
+        </div>
+        <div class="card">
+            <div class="card7 image" id="card7"></div>
+        </div>
+        <div class="card">
+            <div class="card8 image" id="card8"></div>
+        </div>
+        <div class="card">
+            <div class="card9 image" id="card9"></div>
+        </div>
+        <div class="card">
+            <div class="card10 image" id="card10"></div>
+        </div>
+        <div class="card">
+            <div class="card11 image" id="card11"></div>
+        </div>
+        <div class="card">
+            <div class="card12 image" id="card12"></div>
         </div>
     </div>
+    <div class="overlay">
+        <div class="overlay-wrapper">
+            <div class="settings"></div>
+        </div>
+    </div>
+
 </div>
 <script>
+    let cardOpened = false
+    let cardsCount = 0
+    let classIndex = "8a";
+    let openCards = [];
+    let countGuessed = 0;
 
+    // создаем массивы со всеми картами, с картами 1ой группы, 2ой группы и 3ей группы
+    let groups = [[], [], [], [], [], []]
 
+    async function getConfig() {
+        const response = await fetch("config.json");
+        return response.json();
+    }
 
-    let r = document.querySelector(':root');
-    document.querySelectorAll('.image').forEach((el, index) => {
-        r.style.setProperty(`--card${index + 1}`, "url('1.jpg')")
-    })
+    let config = {};
+    getConfig().then(data => {
+        config = data
+        start();
+        renderSettings()
+    });
 
-    document.querySelectorAll('div.card').forEach(el => {
-        el.addEventListener('click', function () {
-            if (this.classList.contains('open')) this.classList.remove('open')
-            else this.classList.add('open')
+    function renderSettings(){
+        const container = document.querySelector('.settings');
+        const classMap = config['classes'];
+        Object.keys(classMap).forEach((item)=>{
+            let el = document.createElement("button")
+            el.innerText = classMap[item]["title"];
+            el.classList.add("class-btn")
+            el.addEventListener("click", () => {
+                classIndex = item;
+                start();
+                document.querySelector('.overlay').classList.remove('show')
+            })
+            container.appendChild(el);
         })
+    }
+    //show all
+
+    console.log(config)
+    // let wrapper = document.querySelector('.wrapper');
+    // if (wrapper) {
+    //     for (let classIndex in config.classes) {
+    //         for (let i = 1; i <= config.classes[classIndex]; i++) {
+    //             let card = document.createElement("div");
+    //             card.classList.add('card')
+    //             card.classList.add('d')
+    //             let image = document.createElement("div")
+    //             image.classList.add('image');
+    //             image.style.backgroundImage = `url('textures/${classIndex}/${i}.jpg')`
+    //             image.title = `${classIndex}/${i}.jpg`
+    //             card.appendChild(image);
+    //             wrapper.appendChild(card);
+    //         }
+    //     }
+
+
+    // }
+    // функция выбирания двух рандомных карточек из основного массива
+    function getMultipleRandom(arr, num) {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, num);
+    }
+
+
+
+    // "тасуем" карты
+    function shuffleCards() {
+
+        let cardsArr = []
+
+        for (let i = 1; i <= 12; i++) {
+            cardsArr.push(`card${i}`)
+        }
+        console.log(cardsArr)
+
+        cardsArr.sort()
+
+
+        groups.forEach(function (item, index) {
+            item = getMultipleRandom(cardsArr, 2)
+            groups[index] = item
+            cardsArr = cardsArr.filter(function (element) {
+                return !item.includes(element)
+            })
+        })
+        console.log(groups)
+
+        let images = getRandomClassImages(classIndex)
+        console.log(images)
+        let r = document.querySelector(':root');
+        groups.forEach(function (item, index) {
+            item.forEach(function (i) {
+                r.style.setProperty(`--${i}`, `url('textures/${classIndex}/${images[index]}.jpg')`)
+            })
+        })
+
+    }
+
+
+    function getRandomClassImages(classIndex) {
+        let images = Array.from({length: config.classes[classIndex]["count"]}, (_, index) => index + 1)
+        return images.sort(() => 0.5 - Math.random());
+    }
+
+
+    // закрываем открытые карты
+    function closeCards() {
+        document.querySelectorAll('.open').forEach(function (el) {
+            el.classList.remove('open')
+            cardsCount -= 1
+        })
+    }
+
+    // определяем открытые карты
+    function isGuessed() {
+        let result = false
+
+        groups.forEach(function (c) {
+            result = openCards.every(function (i) {
+                return c.includes(i)
+                console.log(c.includes(i))
+            })
+            if (result) {
+                console.log('in cards')
+                c.forEach(function (item) {
+                    document.getElementById(item).classList.add('guessed');
+                    countGuessed++;
+                })
+            }
+        })
+        if (countGuessed === 12){
+            console.log('end')
+        }
+
+        return result
+    }
+
+    function onClick(e) {
+        console.log('click')
+
+        let can = !this.classList.contains('open') && !this.classList.contains('guessed') &&  countGuessed < 12
+
+        if (can){
+            console.log(e.target.id)
+            if (cardsCount < 2) {
+                countEl.innerText = parseInt(countEl.innerText) + 1;
+                this.classList.add('open')
+                console.log(e.target.id)
+                openCards.push(e.target.id)
+                cardsCount += 1
+                if (cardsCount == 2) {
+                    isGuessed()
+                    setTimeout(function () {
+                        openCards = []
+                        closeCards()
+                    }, 500)
+                }
+            }
+        }
+
+        let elementId = e.target.id
+
+    }
+
+    function start(){
+        cardsCount = 0;
+        countGuessed = 0;
+        countEl.innerText = 0;
+        openCards = [];
+        shuffleCards()
+        document.querySelectorAll('.open').forEach(function (item) {
+            item.classList.remove('open')
+        })
+        document.querySelectorAll('.guessed').forEach(function (item) {
+            item.classList.remove('guessed')
+        })
+        document.querySelectorAll('.image').forEach((item, index) => {
+            console.log(item);
+            setTimeout(() => {
+                item.classList.add('start')
+                setTimeout(() => item.classList.remove('start'),500)
+            },index * 150)
+        })
+
+    }
+    let countEl = document.getElementById('count');
+    document.querySelectorAll('div.card').forEach(el => {
+        el.addEventListener('click', onClick)
     })
+    document.getElementById('restart').addEventListener('click', function (e) {
+        start()
+        setTimeout(() => e.target.blur(), 510)
+
+    })
+    document.getElementById('settings').addEventListener('click', function (e) {
+        document.querySelector('.overlay').classList.add('show')
+        setTimeout(() => e.target.blur(), 510)
+    })
+
+
 
 </script>
 
