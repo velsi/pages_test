@@ -276,6 +276,7 @@
 
 
     </style>
+    <script src="https://telegram.org/js/games.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTDJD9RZ48"></script>
     <script>
@@ -541,6 +542,7 @@
 
     })
     document.getElementById('settings').addEventListener('click', function (e) {
+        alert(window.TelegramGameProxy.initParams);
         e.target.classList.add('btn-clicked')
         document.querySelector('.overlay').classList.add('show')
         setTimeout(() => e.target.classList.remove('btn-clicked'), 510)
