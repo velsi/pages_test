@@ -168,30 +168,28 @@
             background-image: var(--card12);
         }
 
-        .head .btn {
+
+        .settings-button {
             border: none;
             width:64px;
             height: 64px;
-            padding: 2px 8px;
-            background-size: cover;
-            margin-left:30px;
-        }
-
-        .settings-button {
             background: url(textures/setting.png) no-repeat top left;
+            padding: 2px 8px;
+            margin-right: 30px;
+            background-size: cover;
         }
         .restart-button {
+            border: none;
+            width:64px;
+            height: 64px;
             background: url(textures/restart.png) no-repeat top left;
-        }
-        .volume-button-on {
-            background: url(textures/soundon.png) no-repeat top left;
-        }
-        .volume-button-off {
-            background: url(textures/soundoff.png) no-repeat top left;
+            padding: 2px 8px;
+            background-size: cover;
         }
         .btn-clicked {
             -webkit-animation: btn-rotate 500ms forwards linear;
             -moz-animation: btn-rotate 500ms forwards linear;
+            -ms-animation: btn-rotate 500ms forwards linear;
             -o-animation: btn-rotate 500ms forwards linear;
             animation: btn-rotate 500ms forwards linear;
         }
@@ -233,21 +231,13 @@
 
         .overlay{
             position:absolute;
-            top:0;
-            left:0;
+            top:0px;
+            left:0px;
             width:100vw;
             height:100vh;
             display:none;
             background-color: #9b9da4;
             opacity: 0.9;
-        }
-        .overlay-content{
-            position:absolute;
-            top:0;
-            left:0;
-            width:100vw;
-            height:100vh;
-            display:none;
         }
         .settings{
             display: grid;
@@ -270,64 +260,44 @@
             opacity:1;
         }
 
-        .modal.show .overlay, .modal.show .overlay-content {
+        .show {
             display: block;
         }
 
-        .class-selected {
-            color: white;
-            background-color: #ff5722;
-        }
-        .info{
-            position: fixed;
-            bottom: 30px;
-            left: 0;
-            text-align: center;
-            width: 100vw;
-            margin: auto;
-        }
-
-        @media only screen and (max-device-width: 480px) {
-            .restart-button{
-                margin-left:60px !important;
-            }
-        }
-        @media only screen and (min-device-width: 480px) {
+        @media (max-width: 480px) {
             .container {
                 max-width: 400px;
             }
-            .head .btn {
+            .settings-button, .restart-button {
                 width:32px;
                 height: 32px;
             }
-
         }
 
 
     </style>
-    <script src="https://telegram.org/js/games.js"></script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PMWQRS5M');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTDJD9RZ48"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-XTDJD9RZ48');
+    </script>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PMWQRS5M"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<div>
+
+
+</div>
 <div class=container>
     <div class="wrapper">
         <div class="head">
             <div class="counter">Тыки: <strong id="count">0</strong></div>
             <div class="head-buttons">
-                <div id="volume" class="btn volume-button-on"></div>
-                <div id="settings" class="btn settings-button"> </div>
-                <div id="restart" class="btn restart-button"> </div>
+                <div id="settings" class="settings-button"> </div>
+                <div id="restart" class="restart-button"> </div>
             </div>
         </div>
         <div class="card">
@@ -367,34 +337,23 @@
             <div class="card12 image" id="card12"></div>
         </div>
     </div>
-    <div class="modal">
-        <div class="overlay"></div>
-        <div class="overlay-content">
-            <div class="overlay-wrapper">
-                <div class="settings"></div>
-                <a href="https://t.me/Mxkuryatkov" target="_blank" class="info">@Mxkuryatkov 2023</a>
-            </div>
+    <div class="overlay">
+        <div class="overlay-wrapper">
+            <div class="settings"></div>
         </div>
     </div>
 
 </div>
 <script>
-    let soundOn = true
-    const CARDS_NUMBER = 12;
-
-    let clickSound = new Audio('sounds/click.mp3')
-    let winSound = new Audio('sounds/win.mp3')
-    let guessedSound = new Audio('sounds/guessed.mp3')
-
+    let cardOpened = false
     let cardsCount = 0
-    let classIndex = "teachers";
+    let classIndex = "8a";
     let openCards = [];
     let countGuessed = 0;
 
     // создаем массивы со всеми картами, с картами 1ой группы, 2ой группы и 3ей группы
     let groups = [[], [], [], [], [], []]
 
-    let countEl = document.getElementById('count');
     async function getConfig() {
         const response = await fetch("config.json");
         return response.json();
@@ -403,48 +362,28 @@
     let config = {};
     getConfig().then(data => {
         config = data
-        let { classIndex: _classIndex } = window.TelegramGameProxy.initParams
-        if (_classIndex && config['classes'][_classIndex]){
-            classIndex = _classIndex
-        }
         start();
-        renderSettings();
-        setPageTitle();
+        renderSettings()
     });
-
-    function setPageTitle(title){
-        if (title) document.title = title
-        else if (config['classes'][classIndex]['title']) document.title = config['classes'][classIndex]['title']
-    }
-
 
     function renderSettings(){
         const container = document.querySelector('.settings');
         const classMap = config['classes'];
-        let selectedClassElement = null;
         Object.keys(classMap).forEach((item)=>{
             let el = document.createElement("button")
             el.innerText = classMap[item]["title"];
             el.classList.add("class-btn")
-            if (item === classIndex) {
-                el.classList.add('class-selected');
-                selectedClassElement = el;
-            }
             el.addEventListener("click", () => {
                 classIndex = item;
-                selectedClassElement.classList.remove('class-selected')
-                el.classList.add('class-selected')
-
-                selectedClassElement = el;
                 start();
-                setPageTitle();
-                document.querySelector('.modal').classList.remove('show')
+                document.querySelector('.overlay').classList.remove('show')
             })
             container.appendChild(el);
         })
     }
     //show all
 
+    console.log(config)
     // let wrapper = document.querySelector('.wrapper');
     // if (wrapper) {
     //     for (let classIndex in config.classes) {
@@ -476,9 +415,13 @@
 
         let cardsArr = []
 
-        for (let i = 1; i <= CARDS_NUMBER; i++) {
+        for (let i = 1; i <= 12; i++) {
             cardsArr.push(`card${i}`)
         }
+        console.log(cardsArr)
+
+        cardsArr.sort()
+
 
         groups.forEach(function (item, index) {
             item = getMultipleRandom(cardsArr, 2)
@@ -487,8 +430,10 @@
                 return !item.includes(element)
             })
         })
+        console.log(groups)
 
         let images = getRandomClassImages(classIndex)
+        console.log(images)
         let r = document.querySelector(':root');
         groups.forEach(function (item, index) {
             item.forEach(function (i) {
@@ -520,34 +465,37 @@
         groups.forEach(function (c) {
             result = openCards.every(function (i) {
                 return c.includes(i)
+                console.log(c.includes(i))
             })
             if (result) {
+                console.log('in cards')
                 c.forEach(function (item) {
                     document.getElementById(item).classList.add('guessed');
                     countGuessed++;
-                    if (soundOn) guessedSound.play()
                 })
             }
         })
-        if (countGuessed === CARDS_NUMBER){
-            if (soundOn) winSound.play()
+        if (countGuessed === 12){
+            console.log('end')
         }
 
         return result
     }
 
     function onClick(e) {
-        let can = !this.classList.contains('open') && !e.target.classList.contains('guessed') &&  countGuessed < CARDS_NUMBER
+        console.log('click')
+
+        let can = !this.classList.contains('open') && !this.classList.contains('guessed') &&  countGuessed < 12
 
         if (can){
+            console.log(e.target.id)
             if (cardsCount < 2) {
                 countEl.innerText = parseInt(countEl.innerText) + 1;
                 this.classList.add('open')
+                console.log(e.target.id)
                 openCards.push(e.target.id)
                 cardsCount += 1
-                if (soundOn) clickSound.play()
-
-                if (cardsCount === 2) {
+                if (cardsCount == 2) {
                     isGuessed()
                     setTimeout(function () {
                         openCards = []
@@ -557,6 +505,7 @@
             }
         }
 
+        let elementId = e.target.id
 
     }
 
@@ -573,6 +522,7 @@
             item.classList.remove('guessed')
         })
         document.querySelectorAll('.image').forEach((item, index) => {
+            console.log(item);
             setTimeout(() => {
                 item.classList.add('start')
                 setTimeout(() => item.classList.remove('start'),500)
@@ -580,22 +530,10 @@
         })
 
     }
-
+    let countEl = document.getElementById('count');
     document.querySelectorAll('div.card').forEach(el => {
         el.addEventListener('click', onClick)
     })
-    document.getElementById('volume').addEventListener('click',function(e){
-        soundOn = !soundOn
-        if (soundOn){
-            e.target.classList.add('volume-button-on')
-            e.target.classList.remove('volume-button-off')
-        }
-        else{
-            e.target.classList.add('volume-button-off')
-            e.target.classList.remove('volume-button-on')
-        }
-    })
-
     document.getElementById('restart').addEventListener('click', function (e) {
         e.target.classList.add('btn-clicked')
         start()
@@ -603,14 +541,15 @@
 
     })
     document.getElementById('settings').addEventListener('click', function (e) {
+        countEl.innerText = JSON.stringify(window.TelegramGameProxy.initParams);
         e.target.classList.add('btn-clicked')
-        document.querySelector('.modal').classList.add('show');
-        setPageTitle('Настройки')
+        document.querySelector('.overlay').classList.add('show')
         setTimeout(() => e.target.classList.remove('btn-clicked'), 510)
     })
 
 
 
 </script>
+<script src="https://telegram.org/js/games.js"></script>
 </body>
 </html>
